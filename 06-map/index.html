@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Map Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <style>
+        #singapore {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="singapore"></div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script>
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var map = L.map('singapore').setView([1.3521, 103.8198], 13); // Coordinates for Singapore and zoom level
+
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+
+            // Adding a marker at the specified coordinates
+            var marker = L.marker([1.2834, 103.8607]).addTo(map);
+            marker.bindPopup("Marker at Latitude: 1.2834, Longitude: 103.8607").openPopup();
+
+            // Adding GeoJSON layer to the map (working example for Question 10)
+            var area = {
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "geometry": {
+                            "type": "Polygon",
+                            "coordinates": [
+                                [
+                                    [103.812, 1.295],
+                                    [103.812, 1.305],
+                                    [103.822, 1.305],
+                                    [103.822, 1.295],
+                                    [103.812, 1.295]
+                                ]
+                            ]
+                        },
+                        "properties": {
+                            "name": "Sample Area"
+                        }
+                    }
+                ]
+            };
+
+            L.geoJSON(area).addTo(map);
+        });
+    </script>
+</body>
+</html>
